@@ -1,21 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-// avatarUrl
-// :
-// "https://avatar.iran.liara.run/username?username=bao"
-// email
-// :
-// "bao5@123"
-// isAdmin
-// :
-// false
-// member_id
-// :
-// "6351f964-6c19-4e0f-9cd7-233035f7f810"
-// username
-// :
-// "bao"
 
 type userStore = {
   user: {

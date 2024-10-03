@@ -2,33 +2,39 @@
 import { useState } from "react";
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation"; // Use the new 'next/navigation' hook for the App Router
 import { Alert, Button, Label, Navbar, TextInput } from "flowbite-react";
 import axios from "axios";
 import Logo from "../component/logo";
 import dotenv from "dotenv";
+import { HiInformationCircle } from "react-icons/hi";
+
 dotenv.config();
-const SignIn = () => {
-
-  
-
+const SignUp = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
+    //password: "",
     username: "",
   });
+  const [err, setErr] = useState("");
   const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    //console.log(formData);
-    if (!formData.email || !formData.password) {
-    }
+    console.log(formData);
+
     axios
-      .post(process.env.SERVER_URL + "/signup", formData)
-      .then((res) => {})
-      .catch((err) => {});
+      .post(process.env.NEXT_PUBLIC_SERVER_URL + "/auth/signup", formData)
+      .then((res) => {
+        console.log(res.data);
+        router.push("/signin");
+      })
+      .catch((err) => {
+        console.log(err);
+        setErr(err.response.data.message);
+      });
   };
 
   return (
@@ -60,16 +66,13 @@ const SignIn = () => {
             ></TextInput>
             <Label value="Password"></Label>
 
-            <TextInput
+            {/* <TextInput
               type="password"
               placeholder="Password"
               id="password"
               value={formData.password}
               onChange={handleChange}
-            ></TextInput>
-            {/* <button className="px-2 py-1 rounded-lg text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 font-bold">
-              Sign In
-            </button> */}
+            ></TextInput> */}
 
             <button className="text-white bg-green-600 rounded-lg py-1 font-bold">
               Sign Up
@@ -81,15 +84,19 @@ const SignIn = () => {
               </Link>
             </p>
           </form>
-          {/* {err && (
-            <Alert color="failure" className="text-center">
+          {err && (
+            <Alert
+              color="failure"
+              className="text-center"
+              icon={HiInformationCircle}
+            >
               {err}
             </Alert>
-          )} */}
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp;

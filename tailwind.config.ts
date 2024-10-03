@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 const flowbite = require("flowbite-react/tailwind");
+import daisyui from "daisyui";
 
 const config: Config = {
   darkMode: ["class"],
@@ -13,6 +14,9 @@ const config: Config = {
     extend: {},
   },
 
-  plugins: [require("tailwindcss-animate"), flowbite.plugin()],
+  plugins: [require("tailwindcss-animate"), flowbite.plugin(), daisyui],
+  daisyui: {
+    themes: ["light"],
+  },
 };
 export default config;
